@@ -1,0 +1,24 @@
+Package: stylest2
+Title: Estimating Speakers of Texts
+Version: 0.1
+Authors@R: c(person("Christian", "Baehr", role = c("aut", "cre", "cph"), email="cbaehr@princeton.edu"),
+		person("Arthur", "Spirling", role=c("aut", "cph")))
+Author: Christian Baehr [aut, cre]
+Maintainer: Christian Baehr <cbaehr@princeton.edu>
+Description: Estimates the authors or speakers of texts. Methods developed in Huang et al. (2020).
+Depends: R (>= 4.2),
+License: GPL-3
+Imports:
+	Matrix,
+	quanteda
+Suggests:
+	devtools,
+	knitr
+Collate:
+	'stylest2_select_vocab.R'
+	'stylest2_fit.R'
+	'stylest2_predict.R'
+	'data.R'
+	'stylest2.R'
+Encoding: UTF-8
+RoxygenNote: 7.2.3

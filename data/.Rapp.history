@@ -1,0 +1,7 @@
+load("/Users/christianbaehr/Documents/GitHub/stylest2_project/stylest2_project/data/sotu_speeches.RData")
+dir()
+pwd()
+getwd()
+sotu_speeches=dat2
+save(sotu_speeches, "sotu_speeches.RData")
+save(sotu_speeches, file="sotu_speeches.RData")
