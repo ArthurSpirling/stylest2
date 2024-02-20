@@ -124,7 +124,8 @@ stylest2_predict <- function(dfm, model, speaker_odds=FALSE, term_influence=FALS
   }
   
   if (term_influence) {
-    out$term_influence <- list(.stylest2_term_influence(pred_docs_dfm=pred_docs_dfm, eta_tv=eta_store))
+    out$term_influence <- list(.stylest2_term_influence(pred_docs_dfm=pred_docs_dfm, eta_tv=eta_store,
+                                                        model=model))
   }
   
   return(out)
@@ -226,7 +227,7 @@ stylest2_predict <- function(dfm, model, speaker_odds=FALSE, term_influence=FALS
 #' 
 #' @keywords internal
 #' 
-.stylest2_term_influence <- function(pred_docs_dfm, eta_tv) {
+.stylest2_term_influence <- function(pred_docs_dfm, eta_tv, model) {
   
   pred_authors <- quanteda::docvars(pred_docs_dfm)["author"][,1]
   
