@@ -17,6 +17,8 @@
 #' @param fill Should missing values in term weights be filled? Defaults to FALSE.
 #' @param fill_weight Numeric value to fill in as weight for any term which does 
 #' not have a weight specified in \code{term_weights}.
+#' @param suppress_warning TRUE/FALSE, indicate whether to suppress warnings from
+#' \code{stylest2_fit()}.
 #' @return List of: best cutoff percent with the best speaker classification
 #'   rate; cutoff percentages that were tested; matrix of the mean percentage of
 #'   incorrectly identified speakers for each cutoff percent and fold; and the

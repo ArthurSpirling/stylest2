@@ -13,7 +13,9 @@ Imports:
 	quanteda
 Suggests:
 	devtools,
-	knitr
+	knitr,
+	rmarkdown,
+	kableExtra
 Collate:
 	'stylest2_select_vocab.R'
 	'stylest2_fit.R'
@@ -21,4 +23,5 @@ Collate:
 	'data.R'
 	'stylest2.R'
 Encoding: UTF-8
+VignetteBuilder: knitr, rmarkdown
 RoxygenNote: 7.2.3
