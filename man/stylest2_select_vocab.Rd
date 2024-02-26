@@ -12,7 +12,8 @@ stylest2_select_vocab(
   terms = NULL,
   term_weights = NULL,
   fill = FALSE,
-  fill_weight = NULL
+  fill_weight = NULL,
+  suppress_warning = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,9 @@ vocab. Names should correspond to the term.}
 
 \item{fill_weight}{Numeric value to fill in as weight for any term which does 
 not have a weight specified in \code{term_weights}.}
+
+\item{suppress_warning}{TRUE/FALSE, indicate whether to suppress warnings from
+\code{stylest2_fit()}.}
 }
 \value{
 List of: best cutoff percent with the best speaker classification

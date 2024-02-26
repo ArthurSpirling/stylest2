@@ -9,7 +9,6 @@ stylest2_fit(
   smoothing = 0.5,
   terms = NULL,
   term_weights = NULL,
-  fill = FALSE,
   fill_weight = NULL
 )
 }
@@ -24,8 +23,6 @@ use all terms.}
 
 \item{term_weights}{Named vector of distances (or any weights) per term in the 
 vocab. Names should correspond to the term.}
-
-\item{fill}{Should missing values in term weights be filled? Defaults to FALSE.}
 
 \item{fill_weight}{Numeric value to fill in as weight for any term which does 
 not have a weight specified in \code{term_weights}.}
