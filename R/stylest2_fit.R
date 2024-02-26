@@ -12,14 +12,13 @@
 #' use all terms.
 #' @param term_weights Named vector of distances (or any weights) per term in the 
 #' vocab. Names should correspond to the term.
-#' @param fill Should missing values in term weights be filled? Defaults to FALSE.
 #' @param fill_weight Numeric value to fill in as weight for any term which does 
 #' not have a weight specified in \code{term_weights}.
 #' @return An S3 object, a model with with each term that occurs in the text, the 
 #' frequency of use for each author, and the frequency of that terms' occurrence 
 #' through the texts.
 #' 
-stylest2_fit <- function(dfm, smoothing=0.5, terms=NULL, term_weights=NULL, fill=FALSE, 
+stylest2_fit <- function(dfm, smoothing=0.5, terms=NULL, term_weights=NULL, 
                          fill_weight=NULL) {
   
   ## check that `docs` is of acceptable class and, if so, does it have the correct
@@ -34,23 +33,32 @@ stylest2_fit <- function(dfm, smoothing=0.5, terms=NULL, term_weights=NULL, fill
     stop('Smoothing value must be numeric and non-negative.')
   }
   
-  ## generate value to fill NA term weights if applicable
-  if(fill & !is.null(fill_weight)) {
-    fill_value <- fill_weight
-  } else if (fill & is.null(fill_weight)) {
-    fill_value <- mean(term_weights, na.rm=TRUE)
-  }
   
-  ## fill missing term weights
-  if(!is.null(term_weights) & any(is.na(term_weights))) {
+  
+  if( !is.null(term_weights) ) {
+    term_weights <- term_weights[names(term_weights) %in% colnames(dfm)]
     
-    term_weights[is.na(term_weights)] <- fill_value
+    no_wts <- colnames(dfm)[!colnames(dfm) %in% names(term_weights)]
+    
+    term_weights[no_wts] <- NA
+    
+    ## generate value to fill NA term weights if applicable
+    if( !is.null(fill_weight) ) {
+      fill_value <- fill_weight
+    } else {
+      fill_value <- mean(term_weights, na.rm=TRUE)
+    }
+    
+    ## fill missing term weights
+    term_weights[ is.na(term_weights) ] <- fill_value
     
   }
   
   ## if passes all checks, fit the model
-  model <- .fit_term_usage(dfm=dfm, smoothing=smoothing, terms=terms,
-                           term_weights=term_weights)
+  model <- fit_term_usage(dfm=dfm, 
+                          smoothing=smoothing, 
+                          terms=terms, 
+                          term_weights=term_weights)
   
   ## return the model output
   return(model)
@@ -65,13 +73,10 @@ stylest2_fit <- function(dfm, smoothing=0.5, terms=NULL, term_weights=NULL, fill
 #' use all terms.
 #' @param term_weights Named vector of distances (or any weights) per term in the 
 #' vocab. Names should correspond to the term.
-#' @param fill Should missing values in term weights be filled? Defaults to FALSE.
-#' @param fill_weight Numeric value to fill in as weight for any term which does 
-#' not have a weight specified in \code{term_weights}.
 #' @return A model with with each term that occurs in the text, the frequency of 
 #' use for each author, and the frequency of that terms' occurrence through the texts.
 #' 
-.fit_term_usage <- function(dfm, smoothing, terms, term_weights) {
+fit_term_usage <- function(dfm, smoothing, terms, term_weights) {
   #require("Matrix")
   #require("quanteda")
   

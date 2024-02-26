@@ -110,30 +110,29 @@ stylest2_predict <- function(dfm, model, speaker_odds=FALSE, term_influence=FALS
   }
   
   out <- list(model = model,
-              posterior = .stylest2_posterior(log_weights=log_weights, 
-                                              pred_docs_dfm=pred_docs_dfm, 
-                                              speakers=speakers,
-                                              log_prior=log_prior))
+              posterior = posterior(log_weights=log_weights, 
+                                    pred_docs_dfm=pred_docs_dfm, 
+                                    speakers=speakers, 
+                                    log_prior=log_prior))
   
   
   if (speaker_odds) {
-    out$speaker_odds <- .stylest2_speaker_odds(log_weights=log_weights,
-                                               pred_docs_dfm = pred_docs_dfm,
-                                               pred_docs_ntoken=pred_docs_ntoken, 
-                                               speakers=speakers)
+    out$speaker_odds <- speaker_odds(log_weights=log_weights, 
+                                     pred_docs_dfm = pred_docs_dfm, 
+                                     pred_docs_ntoken=pred_docs_ntoken, 
+                                     speakers=speakers)
   }
   
   if (term_influence) {
-    out$term_influence <- list(.stylest2_term_influence(pred_docs_dfm=pred_docs_dfm, eta_tv=eta_store,
-                                                        model=model))
+    out$term_influence <- term_influence(pred_docs_dfm=pred_docs_dfm, 
+                                         eta_tv=eta_store, 
+                                         model=model)
   }
   
   return(out)
   
 }
 
-#' stylest2_posterior
-#' 
 #' Internal stylest2 function to predict posterior likelihoods of authorship.
 #'
 #' Generate the posterior likelihood of speaker given their rates and predicted
@@ -147,7 +146,7 @@ stylest2_predict <- function(dfm, model, speaker_odds=FALSE, term_influence=FALS
 #' 
 #' @keywords internal
 #' 
-.stylest2_posterior <- function(log_weights, pred_docs_dfm, speakers, log_prior) {
+posterior <- function(log_weights, pred_docs_dfm, speakers, log_prior) {
   #require(Matrix)
   
   ## subtract the HIGHEST valued log posterior associated with each document from
@@ -188,7 +187,7 @@ stylest2_predict <- function(dfm, model, speaker_odds=FALSE, term_influence=FALS
 #' 
 #' @keywords internal
 #' 
-.stylest2_speaker_odds <- function(log_weights, pred_docs_dfm, pred_docs_ntoken, speakers) {
+speaker_odds <- function(log_weights, pred_docs_dfm, pred_docs_ntoken, speakers) {
   
   ## instead of subtracting highest valued log posterior from all document-wise,
   ## we instead divide each posterior by the number of tokens in that document
@@ -227,7 +226,7 @@ stylest2_predict <- function(dfm, model, speaker_odds=FALSE, term_influence=FALS
 #' 
 #' @keywords internal
 #' 
-.stylest2_term_influence <- function(pred_docs_dfm, eta_tv, model) {
+term_influence <- function(pred_docs_dfm, eta_tv, model) {
   
   pred_authors <- quanteda::docvars(pred_docs_dfm)["author"][,1]
   

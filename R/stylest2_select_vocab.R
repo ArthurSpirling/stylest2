@@ -24,7 +24,7 @@
 #' 
 stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 90, 99), 
                                   nfold=5, terms=NULL, term_weights=NULL, fill=FALSE,
-                                  fill_weight=NULL) {
+                                  fill_weight=NULL, suppress_warning=TRUE) {
   
   ## check that `dfm` is of acceptable class and, if so, does it have the correct
   ## columns?
@@ -34,8 +34,20 @@ stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 
     
   }
   
-  if(smoothing<0 | !is.numeric(smoothing)) {
-    stop('Smoothing value must be numeric and non-negative.')
+  if(smoothing<0 | !is.numeric(smoothing) | length(smoothing)>1) {
+    stop('smoothing must be a non-negative numeric vector of length 1.')
+  }
+  
+  if(any(cutoffs<0) | !is.numeric(cutoffs)) {
+    stop('cutoffs must be a non-negative numeric vector.')
+  } else if (any(cutoffs > 100 | cutoffs < 0)) {
+    stop('all values in cutoffs must be between 0 and 100')
+  }
+  
+  if(nfold<1 ) {
+    stop('nfold must be at least 1')
+  } else if (nfold %% 1 != 0) {
+    stop('nfold must be an integer')
   }
   
   ## extract authors from input data
@@ -89,8 +101,15 @@ stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 
       X_train_sub <- quanteda::dfm_select(X_train, pattern = keep_terms)
       
       ## fit the model to the terms above cutoff
-      fit <- stylest2_fit(dfm=X_train_sub, smoothing=smoothing, terms=terms,
-                          term_weights=term_weights, fill=fill, fill_weight=fill_weight)
+      if(suppress_warning) {
+        fit <- suppressWarnings(stylest2_fit(dfm=X_train_sub, smoothing=smoothing, 
+                                             terms=terms, term_weights=term_weights, 
+                                             fill_weight=fill_weight)) 
+      } else{
+        fit <- stylest2_fit(dfm=X_train_sub, smoothing=smoothing, terms=terms,
+                            term_weights=term_weights, fill_weight=fill_weight)
+      }
+      
       
       ## predict authors for the hold-out fold
       prediction <- stylest2_predict(model=fit, dfm=X_test)
@@ -141,7 +160,11 @@ stylest2_terms <- function(dfm, cutoff) {
     stop("Should be at least two authors in the corpus.")
   }
   if(any(duplicated(author_loc))) {
-    stop("Detected multiple instances of the same author. The corpus must be collapsed to the author-level before passing to stylest2.")
+    warning("Detected multiple texts with the same author. Collapsing to author-level dfm for stylest2_fit() function.")
+    ## group the document feature matrix by author. This is akin to collapsing a matrix
+    ## to the author level, summing over each document for all features in the dfm.
+    ## NOTE: this replaces the corpus `term_matrix()` function to generate the dfm.
+    dfm <- quanteda::dfm_group(dfm, groups = author_loc)
   }
   if(any(is.na(author_loc))) {
     stop("Detected missingness in the authorship variable. Documents with missing authorship should be omitted from the corpus.")
