@@ -19,7 +19,7 @@ it with:
 
 ``` r
 # install.packages("devtools")
-# devtools::install_github("Arthur-Spirling/stylest2")
+# devtools::install_github("ArthurSpirling/stylest2")
 ```
 
 ## Authors
