@@ -18,8 +18,9 @@ The dev version of `stylest2` on GitHub may have additional features
 it with:
 
 ``` r
-# install.packages("devtools")
-# devtools::install_github("ArthurSpirling/stylest2")
+install.packages("devtools")
+devtools::install_github("Arthur-Spirling/stylest2", build_vignettes=FALSE)
+#set build_vignettes to TRUE if vignettes desired
 ```
 
 ## Authors

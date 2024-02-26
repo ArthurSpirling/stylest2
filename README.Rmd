@@ -28,8 +28,9 @@ install.packages("stylest2")
 The dev version of `stylest2` on GitHub may have additional features (and bugs) and is not guaranteed to be stable. Power users may install it with:
 
 ```{r gh-installation, eval = FALSE}
-# install.packages("devtools")
-# devtools::install_github("Arthur-Spirling/stylest2")
+install.packages("devtools")
+devtools::install_github("Arthur-Spirling/stylest2", build_vignettes=FALSE)
+#set build_vignettes to TRUE if vignettes desired
 ```
 
 ## Authors
