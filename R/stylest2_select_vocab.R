@@ -40,8 +40,8 @@ stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 
     stop('smoothing must be a non-negative numeric vector of length 1.')
   }
   
-  if(any(cutoffs<0) | !is.numeric(cutoffs)) {
-    stop('cutoffs must be a non-negative numeric vector.')
+  if( !is.numeric(cutoffs) ) {
+    stop('cutoffs must be a numeric vector.')
   } else if (any(cutoffs > 100 | cutoffs < 0)) {
     stop('all values in cutoffs must be between 0 and 100')
   }
