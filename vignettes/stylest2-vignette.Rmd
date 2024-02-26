@@ -18,10 +18,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r include=FALSE}
-library(kableExtra)
-```
-
 # About `stylest2`
 
 This vignette describes the usage of `stylest2` for estimating speaker (author) style distinctiveness.
@@ -56,8 +52,7 @@ data(novels)
 
 ```{r echo=FALSE}
 # show a snippet of the data
-kable(novels[c(1,4,8), ]) %>%
-  kable_styling(bootstrap_options = c("striped", "hover"))
+knitr::kable(novels[c(1,4,8), ])
 ```
 
 The data should be transformed into a `quanteda` `dfm` object. It should also include a document variable (`docvar`) entitled "author". 
@@ -237,15 +232,13 @@ pred$posterior$log_probs
 The terms with the highest mean influence can be obtained:
 
 ```{r echo = FALSE}
-kable(head(predictions$term_influence$features[order(predictions$term_influence$mean_influence, decreasing = TRUE)])) %>%
-  kable_styling(bootstrap_options = c("striped", "hover"))
+head(predictions$term_influence$features[order(predictions$term_influence$mean_influence, decreasing = TRUE)])
 ```
 
 And the least influential terms:
 
 ```{r echo = FALSE}
-kable(tail(predictions$term_influence$features[order(predictions$term_influence$mean_influence, decreasing = TRUE)])) %>%
-  kable_styling(bootstrap_options = c("striped", "hover"))
+tail(predictions$term_influence$features[order(predictions$term_influence$mean_influence, decreasing = TRUE)])
 ```
 
 ## Issues

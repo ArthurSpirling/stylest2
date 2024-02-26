@@ -16,7 +16,6 @@ Suggests:
 	devtools,
 	knitr,
 	rmarkdown,
-	kableExtra,
 	testthat
 Collate:
 	'stylest2_select_vocab.R'
