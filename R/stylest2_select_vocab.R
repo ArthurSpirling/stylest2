@@ -23,6 +23,12 @@
 #'   rate; cutoff percentages that were tested; matrix of the mean percentage of
 #'   incorrectly identified speakers for each cutoff percent and fold; and the
 #'   number of folds for cross-validation.
+#'   
+#' @examples
+#' data(novels)
+#' novels_dfm <- dfm(tokens(novels$text))
+#' docvars(novels_dfm)["author"] <- novels$author
+#' stylest2_select_vocab(dfm=novels_dfm)
 #' 
 stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 90, 99), 
                                   nfold=5, terms=NULL, term_weights=NULL, fill=FALSE,
@@ -128,9 +134,10 @@ stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 
   
   ## retrieve the highest performing cutoff rate in terms of minimizing average misses
   bestrate <- names(avg_missrate)[which.min(avg_missrate)]
+  bestrate <- gsub("%", "", bestrate)
   
   return(
-    list(cutoff_pct_best = bestrate,
+    list(cutoff_pct_best = as.numeric(bestrate),
          cutoff_candidates = cutoffs,
          cv_missrate_results = missrate,
          nfold = nfold)
@@ -149,6 +156,13 @@ stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 
 #' @param cutoff a single numeric value - the quantile of term frequency under which
 #' to drop terms.
 #' @return A character vector of terms falling above the term frequency cutoff.
+#' 
+#' @examples
+#' data(novels)
+#' novels_dfm <- dfm(tokens(novels$text))
+#' docvars(novels_dfm)["author"] <- novels$author
+#' best_cut <- stylest2_select_vocab(dfm=novels_dfm)
+#' stylest2_terms(dfm = novels_dfm, cutoff=best_cut$cutoff_pct_best)
 #' 
 stylest2_terms <- function(dfm, cutoff) {
   

@@ -24,7 +24,7 @@ This vignette describes the usage of `stylest2` for estimating speaker (author) 
 
 ### Installation
 
-The dev version of `stylest2` on GitHub may have additional features (and bugs) and is not guaranteed to be stable. Power users may install it with:
+The dev version of `stylest2` on GitHub may be installed with:
 
 ```{r gh-installation, eval = FALSE}
 install.packages("devtools")

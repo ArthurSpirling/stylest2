@@ -16,6 +16,13 @@
 #' @param prior Prior probability, defaults to \code{NULL}.
 #' @return A list object:
 #' 
+#' @examples
+#' data(novels)
+#' novels_dfm <- dfm(tokens(novels$text))
+#' docvars(novels_dfm)["author"] <- novels$author
+#' mod <- stylest2_fit(novels_dfm)
+#' stylest2_predict(dfm=novels_dfm, model=mod)
+#' 
 stylest2_predict <- function(dfm, model, speaker_odds=FALSE, term_influence=FALSE,
                              prior=NULL) {
   #require(Matrix)
@@ -223,6 +230,7 @@ speaker_odds <- function(log_weights, pred_docs_dfm, pred_docs_ntoken, speakers)
 #'
 #' @param pred_docs_dfm A document-feature matrix for the texts to be predicted.
 #' @param eta_tv The author-level term weights from a stylest2 model.
+#' @param model A stylest2 model.
 #' 
 #' @keywords internal
 #' 

@@ -18,6 +18,12 @@
 #' frequency of use for each author, and the frequency of that terms' occurrence 
 #' through the texts.
 #' 
+#' @examples
+#' data(novels)
+#' novels_dfm <- dfm(tokens(novels$text))
+#' docvars(novels_dfm)["author"] <- novels$author
+#' stylest2_fit(dfm = novels_dfm)
+#' 
 stylest2_fit <- function(dfm, smoothing=0.5, terms=NULL, term_weights=NULL, 
                          fill_weight=NULL) {
   
@@ -75,6 +81,8 @@ stylest2_fit <- function(dfm, smoothing=0.5, terms=NULL, term_weights=NULL,
 #' vocab. Names should correspond to the term.
 #' @return A model with with each term that occurs in the text, the frequency of 
 #' use for each author, and the frequency of that terms' occurrence through the texts.
+#' 
+#' @keywords internal
 #' 
 fit_term_usage <- function(dfm, smoothing, terms, term_weights) {
   #require("Matrix")
