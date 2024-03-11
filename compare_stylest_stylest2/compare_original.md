@@ -18,6 +18,7 @@ This vignette demonstrates the similar performance of `stylest2` and
 
 ``` r
 library(stylest2)
+library(stylest)
 library(quanteda)
 #> Package version: 3.3.1
 #> Unicode version: 14.0
@@ -65,11 +66,10 @@ evaluates the models performance across different sets of terms. The
 sets are determined by the frequency of term occurrence in the text.
 
 ``` r
-
 set.seed(123)
 (s2_cv <- stylest2_select_vocab(dfm = novels_dfm))
 #> $cutoff_pct_best
-#> [1] "80%"
+#> [1] 80
 #> 
 #> $cutoff_candidates
 #> [1] 50 60 70 80 90 99
@@ -84,10 +84,6 @@ set.seed(123)
 #> 
 #> $nfold
 #> [1] 5
-```
-
-``` r
-library(stylest)
 
 set.seed(123)
 stylest_select_vocab(x = novels$text, speaker = novels$author)
@@ -120,7 +116,6 @@ authorship across cutoffs is quite consistent across the packages.
 We are now ready to estimate a model.
 
 ``` r
-
 terms <- c("sunset", "burden", "amusement")
 
 s2_mod <- stylest2_fit(dfm = novels_dfm)
@@ -157,9 +152,7 @@ s2_pred$posterior$log_probs[1:3 , ]
 #> text1    -55.66133     -95.23924                     0.00000
 #> text2    -62.19359       0.00000                   -62.25615
 #> text3    -82.77107    -101.51593                     0.00000
-```
 
-``` r
 s1_pred <- stylest_predict(model = s1_mod, text = novels$text)
 s1_pred$log_prob[1:3 , ]
 #> 3 x 3 Matrix of class "dgeMatrix"
@@ -178,6 +171,7 @@ all three texts.
 s2_pred$posterior$predicted[1:3]
 #> [1] "Gaskell, Elizabeth Cleghorn" "Eliot, George"              
 #> [3] "Gaskell, Elizabeth Cleghorn"
+
 s1_pred$predicted[1:3]
 #> [1] Gaskell, Elizabeth Cleghorn Eliot, George              
 #> [3] Gaskell, Elizabeth Cleghorn
@@ -190,7 +184,6 @@ We can also produce measures of average speaker distinctiveness across
 predicted texts.
 
 ``` r
-
 s2_pred$speaker_odds$log_odds_mean
 #>     text1     text2     text3     text4     text5     text6     text7     text8 
 #> 0.3618719 0.3805802 0.3863459 0.4804183 0.3901221 0.3610468 0.4728913 0.4471712 
@@ -198,9 +191,6 @@ s2_pred$speaker_odds$log_odds_mean
 #> 0.4073947 0.4080386 0.4914136 0.4087303 0.4288836 0.4301716 0.5136579 0.4457103 
 #>    text17    text18    text19    text20    text21 
 #> 0.5458026 0.3309383 0.3836957 0.3573008 0.3527845
-```
-
-``` r
 
 s1_dnct <- stylest_odds(model = s1_mod, text = novels$text, speaker = novels$author)
 s1_dnct$log_odds_avg
@@ -215,7 +205,6 @@ Last, we can check for the influence of specific terms in attributing
 authorship across the prediction texts.
 
 ``` r
-
 s2_pred$term_influence[order(s2_pred$term_influence$features)[1:10] , ]
 #>     features mean_influence max_influence
 #> 989  _angina     0.05398389    0.16195168
@@ -228,9 +217,6 @@ s2_pred$term_influence[order(s2_pred$term_influence$features)[1:10] , ]
 #> 37         ;     0.58192468    0.85891738
 #> 150        :     0.17606405    0.52819216
 #> 585        !     0.39640294    1.18920882
-```
-
-``` r
 
 s1_infl <- stylest_term_influence(model = s1_mod, text = novels$text, speaker = novels$author)
 s1_infl[order(s1_infl$term)[1:10] , ]
@@ -266,9 +252,7 @@ s2_pred$term_influence[match(cmn_terms[1:10], s2_pred$term_influence$features) ,
 #> 8     shire     0.05900552     0.1770166
 #> 9     there     0.22003559     0.4781609
 #> 10    lived     0.16849238     0.4840757
-```
 
-``` r
 s1_infl[match(cmn_terms[1:10], s1_infl$term) , ]
 #>        term   infl_avg  infl_max
 #> 440      in 0.57821355 1.0974901
