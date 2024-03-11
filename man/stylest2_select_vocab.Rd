@@ -50,3 +50,8 @@ List of: best cutoff percent with the best speaker classification
 K-fold cross validation to determine the optimal cutoff on the term frequency 
 distribution under which to drop terms.
 }
+\examples{
+data(novels_dfm)
+stylest2_select_vocab(dfm=novels_dfm)
+
+}

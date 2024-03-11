@@ -1,0 +1,162 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# stylest2 versus stylest
+
+`stylest2` replaces `stylest` with a new design built to interface with objects from the `quanteda` package.
+
+Results obtained from `stylest2` might differ from `stylest` due to differences in default text pre-processing across the `quanteda` and `corpus` package. A user will obtain equivalent results across the two packages if they feed equivalent document-feature matrices (dfm) to the underlying model. The exact pre-processing steps required to ensure equivalence of dfms will depend on the specifics of a user's text data. 
+
+This vignette demonstrates the similar performance of `stylest2` and `stylest` even under default pre-processing settings.
+
+```{r}
+library(stylest2)
+library(quanteda)
+```
+
+# Loading data
+
+`stylest2` functions accept text data in the form of `quanteda` `dfm` objects. Users should begin by converting their text data to a `dfm`, completing the desired pre-processing steps prior to using `stylest2`. In this example, we convert an R `data.frame` object to a `dfm` with no manual pre-processing.
+
+```{r}
+data(novels)
+
+novels_tok <- tokens(novels$text)
+
+novels_dfm <- dfm(novels_tok)
+```
+
+We must also include a document-level variable in our `dfm` object indicating authorship of the text.
+
+```{r}
+docvars(novels_dfm)["author"] <- novels$author 
+# it is necessary to name the authorship variable "author"
+```
+
+# Estimating models
+
+We are now ready to estimate a `stylest2` model.
+
+### Selecting an optimal vocabulary frequency cutoff
+
+A first step in estimating the model is to determine which terms should be included. By default, both packages include all terms from the dfm. This might not be optimal if too many features result in model overfitting. To resolve this, the package provides a function to select the optimal set of terms using a cross-validation approach. The \code{stylest2_select_vocab} function evaluates the models performance across different sets of terms. The sets are determined by the frequency of term occurrence in the text. 
+
+```{r}
+
+set.seed(123)
+(s2_cv <- stylest2_select_vocab(dfm = novels_dfm))
+```
+```{r}
+library(stylest)
+
+set.seed(123)
+stylest_select_vocab(x = novels$text, speaker = novels$author)
+```
+
+With the exception of the first fold, the rates of mis-attributed authorship across cutoffs is quite consistent across the packages. 
+
+
+### Fitting a model
+
+We are now ready to estimate a model.
+
+```{r}
+
+terms <- c("sunset", "burden", "amusement")
+
+s2_mod <- stylest2_fit(dfm = novels_dfm)
+s2_mod$rate[ , terms]
+
+s1_mod <- stylest_fit(x = novels$text, speaker = novels$author)
+s1_mod$rate[ , terms]
+```
+
+The speaker rates for the selected terms are quite similar across the texts, suggesting that pre-processing differences are not driving significant differences across the two packages. 
+
+### Predicting authorship of new texts
+
+```{r}
+s2_pred <- stylest2_predict(dfm = novels_dfm, model = s2_mod,
+                            speaker_odds = TRUE, term_influence = TRUE)
+s2_pred$posterior$log_probs[1:3 , ]
+```
+
+```{r}
+s1_pred <- stylest_predict(model = s1_mod, text = novels$text)
+s1_pred$log_prob[1:3 , ]
+```
+
+We display the log odds of authorship over the first three prediction texts. The two packages produce very similar results across all the texts, and the predicted authorship is equivalent across packages for all three texts.
+
+```{r}
+s2_pred$posterior$predicted[1:3]
+s1_pred$predicted[1:3]
+```
+
+### Evaluating speaker distinctiveness
+
+We can also produce measures of average speaker distinctiveness across predicted texts.
+
+```{r}
+
+s2_pred$speaker_odds$log_odds_mean
+
+```
+
+```{r}
+
+s1_dnct <- stylest_odds(model = s1_mod, text = novels$text, speaker = novels$author)
+s1_dnct$log_odds_avg
+
+```
+
+### Analyzing the influence of terms
+
+Last, we can check for the influence of specific terms in attributing authorship across the prediction texts. 
+
+```{r}
+
+s2_pred$term_influence[order(s2_pred$term_influence$features)[1:10] , ]
+
+```
+
+```{r}
+
+s1_infl <- stylest_term_influence(model = s1_mod, text = novels$text, speaker = novels$author)
+s1_infl[order(s1_infl$term)[1:10] , ]
+
+```
+
+This is where we see the greatest difference in results across the two packages. Because the \code{corpus} package deviates from \code{quanteda} in its default pre-processing steps, the default document-feature matrix for a given set of texts will also differ across the packages.
+
+```{r}
+cmn_terms <- intersect(s2_pred$term_influence$features, s1_infl$term)
+s2_pred$term_influence[match(cmn_terms[1:10], s2_pred$term_influence$features) , ]
+
+```
+
+```{r}
+s1_infl[match(cmn_terms[1:10], s1_infl$term) , ]
+```
+
+When we compare top terms that are common across the two models, we see that the influence of these terms is very similar between \code{stylest} and \code{stylest2}. 
+
+
+
+
+
+
+
+
+

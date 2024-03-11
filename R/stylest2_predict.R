@@ -17,9 +17,7 @@
 #' @return A list object:
 #' 
 #' @examples
-#' data(novels)
-#' novels_dfm <- dfm(tokens(novels$text))
-#' docvars(novels_dfm)["author"] <- novels$author
+#' data(novels_dfm)
 #' mod <- stylest2_fit(novels_dfm)
 #' stylest2_predict(dfm=novels_dfm, model=mod)
 #' 

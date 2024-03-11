@@ -10,6 +10,8 @@ term_influence(pred_docs_dfm, eta_tv, model)
 \item{pred_docs_dfm}{A document-feature matrix for the texts to be predicted.}
 
 \item{eta_tv}{The author-level term weights from a stylest2 model.}
+
+\item{model}{A stylest2 model.}
 }
 \description{
 Internal stylest2 function to return the influence of each term in predicting authorship.

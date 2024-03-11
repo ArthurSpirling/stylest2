@@ -19,9 +19,7 @@
 #' through the texts.
 #' 
 #' @examples
-#' data(novels)
-#' novels_dfm <- dfm(tokens(novels$text))
-#' docvars(novels_dfm)["author"] <- novels$author
+#' data(novels_dfm)
 #' stylest2_fit(dfm = novels_dfm)
 #' 
 stylest2_fit <- function(dfm, smoothing=0.5, terms=NULL, term_weights=NULL, 

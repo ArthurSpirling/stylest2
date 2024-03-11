@@ -36,3 +36,8 @@ through the texts.
 This function generates a model of speaker/author attribution, given a document-feature
 matrix.
 }
+\examples{
+data(novels_dfm)
+stylest2_fit(dfm = novels_dfm)
+
+}

@@ -25,3 +25,4 @@ use for each author, and the frequency of that terms' occurrence through the tex
 \description{
 Internal stylest2 function to compute term usage
 }
+\keyword{internal}

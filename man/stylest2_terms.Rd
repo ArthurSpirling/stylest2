@@ -19,3 +19,9 @@ A character vector of terms falling above the term frequency cutoff.
 A function to select terms for inclusion in a stylest2 model, based on a document-feature
 matrix of texts to predict and a specified cutoff.
 }
+\examples{
+data(novels_dfm)
+best_cut <- stylest2_select_vocab(dfm=novels_dfm)
+stylest2_terms(dfm = novels_dfm, cutoff=best_cut$cutoff_pct_best)
+
+}

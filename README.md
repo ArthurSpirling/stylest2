@@ -5,6 +5,10 @@
 
 `stylest2` estimates speaker style distinctiveness.
 
+To see how performance of `stylest2` compares with its predecessor
+`stylest`, see the following package
+[vignette](compare_stylest_stylest2/compare_original.md):
+
 ## Installation
 
 The dev version of `stylest2` on GitHub may have additional features

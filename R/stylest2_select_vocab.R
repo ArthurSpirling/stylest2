@@ -25,9 +25,7 @@
 #'   number of folds for cross-validation.
 #'   
 #' @examples
-#' data(novels)
-#' novels_dfm <- dfm(tokens(novels$text))
-#' docvars(novels_dfm)["author"] <- novels$author
+#' data(novels_dfm)
 #' stylest2_select_vocab(dfm=novels_dfm)
 #' 
 stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 90, 99), 
@@ -97,7 +95,7 @@ stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 
     X_train <- dfm[train_set, ]
     
     ## temporary dfm -- utility object to help retrieve terms with frequency >(cutoff/100)
-    temp <- dfm(X_train)
+    temp <- quanteda::dfm(X_train)
     
     for(j in 1:length(cutoffs)) {
       
@@ -158,9 +156,7 @@ stylest2_select_vocab <- function(dfm, smoothing=0.5, cutoffs=c(50, 60, 70, 80, 
 #' @return A character vector of terms falling above the term frequency cutoff.
 #' 
 #' @examples
-#' data(novels)
-#' novels_dfm <- dfm(tokens(novels$text))
-#' docvars(novels_dfm)["author"] <- novels$author
+#' data(novels_dfm)
 #' best_cut <- stylest2_select_vocab(dfm=novels_dfm)
 #' stylest2_terms(dfm = novels_dfm, cutoff=best_cut$cutoff_pct_best)
 #' 

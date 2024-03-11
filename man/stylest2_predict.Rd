@@ -34,3 +34,9 @@ This function generates predicted probabilities of authorship for a set of texts
 It takes as an input a document-feature matrix of texts for which authorship is
 to be predicted, as well as a stylest2 model containing potential authors.
 }
+\examples{
+data(novels_dfm)
+mod <- stylest2_fit(novels_dfm)
+stylest2_predict(dfm=novels_dfm, model=mod)
+
+}
