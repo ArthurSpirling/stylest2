@@ -24,16 +24,3 @@
 #'   public domain in the USA. \url{http://gutenberg.org}
 #' @keywords datasets
 "novels_dfm"
-
-#' SOTU speech data
-#' 
-#' @name sotu
-#' @docType data
-#' @usage data(sotu)
-#' @description A dataset of U.S. presidential State of the Union speeches from 
-#' 1974-present
-#' @format A dataframe with 46 rows and 5 variables.
-#' @source Speeches obtained from the R \code{sotu} package.
-#' @keywords datasets
-"sotu"
-
