@@ -4,8 +4,6 @@ Version: 0.1
 Authors@R: c(person("Christian", "Baehr", role = c("aut", "cre", "cph"), email="cbaehr@princeton.edu"),
 		person("Arthur", "Spirling", role=c("aut", "cph")),
 		person("Leslie", "Huang", role=c("aut")))
-Author: Christian Baehr [aut, cre]
-Maintainer: Christian Baehr <cbaehr@princeton.edu>
 Description: Estimates the authors or speakers of texts. Methods developed in Huang et al. (2020).
 Depends: R (>= 4.2),
 License: GPL-3
@@ -25,4 +23,4 @@ Collate:
 	'stylest2.R'
 Encoding: UTF-8
 VignetteBuilder: knitr, rmarkdown
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
