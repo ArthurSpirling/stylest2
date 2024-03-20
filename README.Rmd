@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 `stylest2` estimates speaker style distinctiveness.
 
-To see how performance of `stylest2` compares with its predecessor `stylest`, see the following package [vignette](compare_stylest_stylest2/compare_original.md):
+To see how performance of `stylest2` compares with its predecessor `stylest`, see the following package [vignette](https://github.com/ArthurSpirling/stylest2/blob/main/compare_stylest_stylest2/compare_original.md):
 
 ## Installation
 
