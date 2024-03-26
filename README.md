@@ -11,6 +11,12 @@ To see how performance of `stylest2` compares with its predecessor
 
 ## Installation
 
+You can obtain the package in the usual way from [CRAN](https://cran.r-project.org/web/packages/stylest2/index.html): 
+
+```r
+ install.packages("stylest2")
+```
+
 The dev version of `stylest2` on GitHub may have additional features
 (and bugs) and is not guaranteed to be stable. Power users may install
 it with:
