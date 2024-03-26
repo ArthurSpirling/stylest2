@@ -7,7 +7,7 @@
 
 To see how performance of `stylest2` compares with its predecessor
 `stylest`, see the following package
-[vignette](https://github.com/ArthurSpirling/stylest2/blob/main/compare_stylest_stylest2/compare_original.md):
+[vignette](https://github.com/ArthurSpirling/stylest2/blob/main/compare_stylest_stylest2/compare_original.md)
 
 ## Installation
 
