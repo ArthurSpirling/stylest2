@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# stylest2 versus stylest
+# `stylest2` versus `stylest`
 
 `stylest2` replaces `stylest` with a new design built to interface with
 objects from the `quanteda` package.
