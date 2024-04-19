@@ -268,4 +268,4 @@ s1_infl[match(cmn_terms[1:10], s1_infl$term) , ]
 ```
 
 When we compare top terms that are common across the two models, we see
-that the influence of these terms is very similar between and .
+that the influence of these terms is very similar between `stylest` and `stylest2`.
