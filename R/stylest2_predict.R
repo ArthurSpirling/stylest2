@@ -47,7 +47,6 @@ stylest2_predict <- function(dfm, model, speaker_odds=FALSE, term_influence=FALS
   ## need the features to correspond to the features from model dfm. Can't include
   ## features that aren't in the original
   pred_docs_dfm <- quanteda::dfm_match(dfm, features=colnames(model$rate))
-  
   ## the number of tokens for each doc in the prediction set. We will use this to
   ## rescale the log-likelihoods across the prediction docs. Without rescaling,
   ## would get uniformly larger values for longer texts since they are all being
@@ -236,25 +235,29 @@ term_influence <- function(pred_docs_dfm, eta_tv, model) {
   
   pred_authors <- quanteda::docvars(pred_docs_dfm)["author"][,1]
   
-  ## aggregate dfm by author
-  x <- quanteda::dfm_group(pred_docs_dfm, pred_authors)
-  ## number of documents by author
-  ndoc <- table(pred_authors)
-  ## ensure order is same as row order in aggregate dfm
-  ndoc <- ndoc[match(rownames(x), names(ndoc))]
-  
-  ## scale each author-level feature count by number of documents, yielding the
-  ## average frequency per author-document
-  fbar <- x * (1/as.numeric(ndoc))
-  rownames(fbar) <- names(ndoc)
-  colnames(fbar) <- colnames(x)
-  
   etabar <- Matrix::colMeans(eta_tv)
   eta_centered <- eta_tv - matrix(1, nrow(eta_tv), 1) %*% etabar
   
-  ## product of average frequency and distinctiveness (centered)
-  d <- fbar * eta_centered
+  ## reduce model eta matrix to only rows corresponding to authors in the set of
+  ## prediction texts
+  eta_lite <- eta_centered[rownames(eta_centered) %in% pred_authors , , drop=F]
   
+  x <- quanteda::dfm_group(pred_docs_dfm, groups = pred_authors)
+  ## number of documents by author
+  ndoc <- as.numeric(table(pred_authors))
+  
+  ## scale each author-level feature count by number of documents, yielding the
+  ## average frequency per author-document
+  fbar <- x * (1/ndoc)
+
+  #make sure author row order of fbar align with those of eta_lite
+  fbar <- fbar[match(rownames(eta_lite), rownames(x)) , , drop=F]
+  
+  ## product of average frequency and distinctiveness (centered)
+  d <- fbar * eta_lite
+  
+
+
   # multiply by term weights if they exist
   if (!is.null(model$term_weights)) {
     # make sure weights are in the same order for matrix multiplication
