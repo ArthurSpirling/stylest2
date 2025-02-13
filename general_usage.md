@@ -24,8 +24,6 @@ library(quanteda)
 
 # Example: Fitting a model to English novels
 
-## dfm
-
 We will be using texts of the first lines of novels by Jane Austen, George Eliot, and Elizabeth Gaskell. Excerpts were obtained from the full texts of novels available on Project Gutenberg: http://gutenberg.org.
 
 ```r
