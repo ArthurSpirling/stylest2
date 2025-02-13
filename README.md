@@ -3,7 +3,7 @@
 
 # stylest2 version 0.1.0
 
-`stylest2` estimates speaker style distinctiveness.
+`stylest2` estimates speaker style distinctiveness. If you need a basic overview of how it works, see [this vignette](https://github.com/ArthurSpirling/stylest2/blob/main/general_usage.md). 
 
 To see how performance of `stylest2` compares with its predecessor
 `stylest`, see the following package
