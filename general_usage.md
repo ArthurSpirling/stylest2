@@ -135,7 +135,7 @@ Below, we fit the model using the terms above the 90th percentile, using the sam
 mod <- stylest2_fit(dfm = novels_dfm, terms = terms_90)
 ```
 
-The model contains detailed information about token usage by each of the authors (see `mod$rate`); exploring this is left as an exercise.
+This will also a issue the same warning about collapsing on author. The model contains detailed information about token usage by each of the authors (see `mod$rate`); exploring this is left as an exercise.
 
 ### Fitting the model: adding custom term weights
 
