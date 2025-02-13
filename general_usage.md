@@ -32,7 +32,7 @@ data(novels)
 
 ```r
 # show a snippet of the data
-knitr::kable(novels[c(1,4,8), ])
+novels[c(1,4,8), ]
 ```
 
 The data should be transformed into a `quanteda` `dfm` object. It should also include a document variable (`docvar`) entitled "author". 
