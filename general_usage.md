@@ -125,6 +125,7 @@ With the best percentile identified as 90 percent, we can select the terms above
 ```r
 terms_90 <- stylest2_terms(dfm = novels_dfm, cutoff = 90)
 ```
+This will issue a warning reminding users that the texts are being grouped/collapsed by author. 
 
 ### Fitting the model: basic
 
