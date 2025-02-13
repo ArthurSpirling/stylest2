@@ -50,7 +50,7 @@ docvars(novels_dfm)["author"] <- novels$author
 
 ```
 
-Tokenization selections can be passed to the `tokens()` function prior to generating a document-feature matrix; see the `quanteda` package for more information about `tokens()`.
+In many cases, one will want to do more elaborate preprocessing.  These decisions can be passed to the `tokens()` function prior to generating a document-feature matrix; see the `quanteda` package for more information about `tokens()`.  For example: 
 
 ```r
 
