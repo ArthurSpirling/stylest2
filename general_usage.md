@@ -35,9 +35,11 @@ data(novels)
 novels[c(1,4,8), ]
 ```
 
-The data should be transformed into a `quanteda` `dfm` object. It should also include a document variable (`docvar`) entitled "author". 
+The data should be transformed into a `quanteda` `dfm` object. 
 
-The corpus should have at least one variable by which the texts can be grouped --- the most common examples are a "speaker" or "author" attribute. Here, we will use `novels$author`.
+**It should also include a document variable (`docvar`) entitled "author".** This is the variable around which the corpus is grouped (and ultimately collapsed).
+
+Here, we will use `novels$author`.
 
 ```r
 novels_tok <- tokens(novels$text)
