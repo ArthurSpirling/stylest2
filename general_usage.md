@@ -1,22 +1,4 @@
----
-title: "stylest2 vignette"
-author: "Christian Baehr"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-# output: rmarkdown::md_document
-always_allow_html: yes
-vignette: >
-  %\VignetteIndexEntry{stylest2 vignette}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
 
-```r
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
 # About `stylest2`
 
