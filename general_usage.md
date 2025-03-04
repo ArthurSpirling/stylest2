@@ -184,6 +184,21 @@ predictions$speaker_odds$log_odds_mean[14]
 predictions$speaker_odds$log_odds_se[14]
 ```
 
+
+The terms with the highest mean influence can be obtained:
+
+```r
+head(predictions$term_influence$features[order(predictions$term_influence$mean_influence, decreasing = TRUE)])
+```
+
+And the least influential terms:
+
+```r
+tail(predictions$term_influence$features[order(predictions$term_influence$mean_influence, decreasing = TRUE)])
+```
+
+
+
 ### Predicting the speaker of a new text
 
 In this example, the model is used to predict the speaker of a new text, in this case _Northanger Abbey_ by Jane Austen. 
@@ -212,17 +227,6 @@ pred$posterior$predicted
 pred$posterior$log_probs
 ```
 
-The terms with the highest mean influence can be obtained:
-
-```r
-head(predictions$term_influence$features[order(predictions$term_influence$mean_influence, decreasing = TRUE)])
-```
-
-And the least influential terms:
-
-```r
-tail(predictions$term_influence$features[order(predictions$term_influence$mean_influence, decreasing = TRUE)])
-```
 
 ## Issues
 
