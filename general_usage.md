@@ -176,8 +176,8 @@ predictions <- stylest2_predict(dfm = novels_dfm, model = mod,
 We can examine the mean log odds that Jane Austen wrote _Pride and Prejudice_ (in-sample).
 
 ```r
-# Pride and Prejudice
-novels$text[14]
+# Pride and Prejudice -- we can just look up 'Pride' in the titles, and see it is novel 14
+novels$text[("Pride",novels$title)]
 
 predictions$speaker_odds$log_odds_mean[14]
 
